@@ -15,7 +15,7 @@ Data Science and Trading Risk Management
 Learning Objective
 ========================================================
 
-- Grammer of R Programing
+- Grammar of R Programming
 - Reading Data from Different Sources
 - Cleaning Data 
 - Plotting Data
