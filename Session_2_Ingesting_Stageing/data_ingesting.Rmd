@@ -1,0 +1,41 @@
+---
+title: "Session 2 Data Ingesting and Stageing"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Objectives and Learning
+
+- Source Raw Data from Web
+- Stage Data for Easy Use
+- Saving Data for Future use
+
+## Tools and Packages
+
+- dplyr
+- rjson
+- httr
+- quandl 
+- mongolite
+
+
+## Using Web APIs 
+
+
+## Different Data Types in R
+
+
+## Very Brief Introduction to Dplyr Package
+
+
+## Scraping Raw Data using Rvest Package
+
+
+## Databases and Persistance
+
+
+## Saving Your Work
+

@@ -1,0 +1,35 @@
+---
+title: "Session 3 Data Munging and Cleaning"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Objectives and Learning
+
+- Clean Data and Make it Ready for Analysis
+- tidy format and semi-raw data
+- time series data 
+
+## Tools and Packages
+
+- dplyr
+- tidyr  
+- xts format
+
+
+## Using dplyr to clean data  
+
+
+## Using tidyr to store data 
+
+
+## Pivot Table Functionality in R
+
+
+## Joining Datasets
+
+
+## Using xts vs. dataframe Pros/Cons

@@ -1,0 +1,34 @@
+---
+title: "Session 3 Statistical Learning"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Objectives and Learning
+
+- Descriptive Statistics
+- Inference and Hypothesis Testing 
+- MachineLearning
+
+## Tools and Packages
+
+- stats package
+- ggplot2
+- glm package
+- time series
+- caret package
+
+
+## Simple descriptive statistics
+
+
+## Regresssion and Statistical Inference
+
+
+## Time Series Forcasting
+
+
+## Machine Learning

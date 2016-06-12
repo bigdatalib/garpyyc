@@ -1,0 +1,28 @@
+---
+title: "Session 3 Developing Web Apps"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Objectives and Learning
+
+- Reproducable Analysis R Markdown
+- Shiny Package and Interactive Apps
+- Deploying Web Apps in the Cloud
+
+## Tools and Packages
+
+- Rstudio IDE 
+- Shiny
+
+
+## R Markdown and Reproducable Research
+
+
+## Shiny and Web Apps 
+
+
+## Deploying Shiny Apps in the Cloud

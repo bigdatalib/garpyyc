@@ -1,0 +1,29 @@
+---
+title: "Session 3 Visualization"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Objectives and Learning
+
+- 
+
+## Tools and Packages
+
+- ggplot2
+- dygraphs and family of htmlwidgets
+- plotly 
+
+
+## Using ggplot2 for exploratory analysis
+
+
+## Visulaizing statistical inference
+
+
+## Interactive Graphics using Java Script based plots
+
+

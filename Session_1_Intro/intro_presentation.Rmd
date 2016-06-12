@@ -1,0 +1,86 @@
+---
+title: "Intro to Data Science for Risk Managers and Trading Professionals"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Why Data Science?
+
+- Risk Managers and Trading Professionals = Decision Engineers
+- Data Science is a science behind getting to better decisions
+- Data Science is about generating hypothesis and testing
+- Data Science is about identifying causal relationship between different market factors
+
+## Our Objective
+
+- Risk Managers can benefit greatly from the world of Data Science
+- Data Science from a the Risk Manager/Trading Professional perspective
+- The objective is to give a small glimpse into possibilities 
+- This is going to introductory and 101 and we hope to build on this through community feedback
+
+## What is some of the use cases in Risk Management
+
+- Outlier Detections and Regime Switching
+- Generating Stress Scenarios
+- Visualizing Market Relationships
+- Developing Prediciton Models
+
+## Data Science Approach 
+
+- Data Science is about uncovering unknowns
+- Experimentation and Validated Learing
+- Lean Approach and (1) Build (2) Measure (3) Learn Cycle
+- Fast cycle development requires fit-for-purpose tools
+
+## Tools and Resources
+
+- Cloud Platform
+- Scalable and flexible data environment
+- Raw Data at your fingertips is 80% of the work
+- Open Source tools with large user community
+
+## What do I use and Why?
+
+- R is one of the most popular tools of Data Scientists
+- R is open source with large user community
+- Single interface and many tools
+- Rich statistical library sets
+
+## How to use R and Setup for the sessions
+
+- Power of R is in Packages
+- RStudio IDE: [www.rstudio.com]
+
+## Data Science Approach and Risk Management Example
+
+- Ingesting Data from an API 
+- Cleaning Data 
+- Exploratory Visualization
+- Descriptive Statistics 
+- Predictive Models 
+- Deploy the tools as an online app
+
+## BitCoin/Crypto Currency Example
+
+- BitCoins potentially new asset class 
+- BitCoins are completely new to me no previous experience and bias
+- We have three currency pairs (1) CAD/BTC (2) US/BTC and (3) EUR/BTC how do we use Data Science to learn about this market and possibly develop a trading model
+- This problem is more about journy and learning than outcome
+
+
+## Flavour of what is to come!
+
+- Ingesting Data From APIs and Stageing for Use
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Data Viz as Exploratory tool
+
+```{r pressure}
+plot(pressure)
+```
+
