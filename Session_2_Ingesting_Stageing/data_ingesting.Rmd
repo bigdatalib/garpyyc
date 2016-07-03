@@ -21,21 +21,128 @@ knitr::opts_chunk$set(echo = FALSE)
 - quandl 
 - mongolite
 
+## Installing R Packages
 
-## Using Web APIs 
+- Power of R in Packages
+- Over 7000 Packages in CRAN
+- CRAN/Github best Sources for R packages
 
+Easy one Step!
+
+```{r eval=FALSE,echo=TRUE,message=FALSE}
+install.packages("xts")
+```
 
 ## Different Data Types in R
 
+- numeric
+```{r,echo=TRUE,message=FALSE}
+x<-5
+str(x)
+```
+- character
+```{r,echo=TRUE,message=FALSE}
+x<-"g"
+str(x)
+x<-c("a","b","c")
+str(x)
+```
 
-## Very Brief Introduction to Dplyr Package
+- data.frame
+```{r,echo=TRUE,message=FALSE}
+x.df<-data.frame(a=c("v1","v2"),b=c(1,2),stringsAsFactors = F)
+str(x.df)
+```
+- list
+```{r,echo=TRUE,message=FALSE}
+x<-list(v3=x.df,v4=c(1,2,3))
+str(x)
+```
 
 
-## Scraping Raw Data using Rvest Package
+## Using Web APIs 
 
+- JSON Format
+```{r,echo=TRUE,message=FALSE}
+#install.packages("jsonlite")
+require(jsonlite)
+samplefile<-fromJSON("https://www.quandl.com/api/v3/datasets/GDAX/CAD.json")
+str(samplefile)
+value<-samplefile$data$data
+```
+- Using Quandl Package
+
+```{r,echo=TRUE,message=FALSE}
+#install.packages("Quandl")
+require(Quandl)
+cad<-Quandl("LOCALBTC/CAD")
+usd<-Quandl("LOCALBTC/USD")
+str(cad)
+head(cad)
+```
+
+## Very Brief Introduction to dplyr Package
+
+- Best tool for Data Munging for data.frame 
+- documentation and references: [Introduction to dplyr](https://github.com/hadley/dplyr) 
+- dplyr cheat sheet [Link](chrome-extension://oemmndcbldboiebfnladdacbdfmadadm/https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+
+- example: Merge USD/BTC and CAD/BTC data by date sets calcuate day over day change for price and volume
+
+```{r, echo=TRUE,message=FALSE}
+# install.packages("dplyr")
+#install.packages("lubridate")
+require(dplyr)
+require(lubridate)
+cad.clean<-cad %>% dplyr::select(date=Date,price.cad=Last,vol.cad=matches("Volume")) 
+
+usd.clean<-usd %>% dplyr::select(date=Date,price.usd=Last,vol.usd=matches("Volume"))
+prices<-cad.clean %>% inner_join(usd.clean, by="date")
+prices<-prices %>% mutate(price.usd.ret=price.usd-lag(price.usd)) %>%
+           mutate(price.cad.ret=price.cad-lag(price.cad)) %>% 
+           mutate(year=year(date),month=month(date))
+head(prices)
+
+```
 
 ## Databases and Persistance
 
+- Many choice among SQL and NoSQL Application
+- Database as a datasource
+- Persistance of Analytics Data
+R Packages: DBI, RMySQL, rmongodb, or mongolite
+
+```{r, echo=TRUE, message=TRUE}
+# install.packages("mongolite")
+require(mongolite)
+m<-mongo(collection="price",db="garp",url="mongodb://localhost")
+m$drop()
+m<-mongo(collection="price",db="garp",url="mongodb://localhost")
+m$insert(prices)
+prices<-m$find()
+
+```
+
+More resources: [Link](https://cran.r-project.org/web/packages/mongolite/vignettes/intro.html)
 
 ## Saving Your Work
+
+- Writing to CSV
+- Saving R Session
+
+```{r, echo=TRUE,message=FALSE}
+# install.packages("readr")
+require(readr)
+prices %>% readr::write_csv("/home/data/prices.csv") 
+head(readr::read_csv("/home/data/prices.csv"))
+save(prices,file="/home/data/session1.RData")
+rm(list=ls(all=TRUE)) 
+load("/home/data/session1.RData")
+head(prices)
+```
+
+
+
+
+
 
