@@ -22,14 +22,102 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Using dplyr to clean data  
 
+```{r, echo=TRUE,message=FALSE}
+load("/home/data/session1.RData")
+```
 
-## Using tidyr to store data 
+- Group_by and Summarise 
 
+```{r,echo=TRUE,message=FALSE}
+require(dplyr)
+tmp<-prices %>% group_by(year) %>% summarise(count=n())
+head(tmp)
+tmp<-prices %>% group_by(year) %>% summarise_each(funs(n(),mean),matches("price"))
+head(tmp)
+tmp<-prices %>% group_by(year) %>% summarise(max=max(price.usd.ret))
+head(tmp)
+tmp<-prices %>% na.omit() %>% group_by(year) %>% summarise(max=max(price.usd.ret))
+head(tmp)
+tmp<-prices %>% na.omit() %>% group_by(year) %>% summarise(sd=sd(price.usd.ret))
+head(tmp)
+```
 
-## Pivot Table Functionality in R
+- filter data
 
+- Filter with numeric data
+```{r, echo=TRUE,message=FALSE}
+tmp<-prices %>% filter(abs(price.usd.ret) > 100)
+head(tmp)
+```
 
-## Joining Datasets
+- Filter by date and arranging dates
+```{r, echo=TRUE,message=FALSE}
+tmp<-prices %>% filter(date > as.Date("2015-01-01",format="%Y-%m-%d")) %>% dplyr::arrange(-desc(date))
+head(tmp)
+tail(tmp)
+```
 
+## Pivot Table Functionality in R and tidyr
+
+```{r, echo=TRUE,message=FALSE}
+#install.packages(tidyr)
+require(tidyr)
+tmp<-prices %>% dplyr::select(date,year,price.usd.ret)%>%
+           tidyr::spread(year,price.usd.ret)
+head(tmp)
+tail(tmp)
+tmp<-tmp %>% gather(year,price,-date)
+head(tmp)
+str(tmp)
+```
+
+## Apply Functions using Purrr Package
+
+- Easy Example
+```{r, echo=TRUE,message=FALSE}
+# install.packages("purrr")
+require(purrr)
+tmp<-tmp %>% map_if(is.factor,as.character)
+
+```
+- More complicate problem
+```{r, echo=TRUE,message=FALSE}
+prices %>%
+  split(.$year) %>%
+  map(~ lm(price.cad.ret ~ price.usd.ret, data = .)) %>%
+  map(summary) %>%
+  map_dbl("r.squared")
+
+prices %>%
+  split(.$year) %>%
+  map(~ lm(price.cad ~ price.usd, data = .)) %>%
+  map(summary) %>%
+  map_dbl("r.squared")
+```
 
 ## Using xts vs. dataframe Pros/Cons
+
+- xts/ts - Pros: Easier Date Functionality & Access to Ecnometric Packages
+cons: does not work well with data.frame based packages dplyr and ggplot
+- data.frame - Pros: Fast & works well with dplyr / Cons: more difficult for date munipilation
+- use both depending functionality and package
+- conversion between df and xts
+
+```{r, echo=TRUE,message=FALSE}
+require(xts)
+head(prices)
+str(prices)
+prices.xts<-xts(prices[,-1],order.by=as.Date(prices[,1],format="%Y-%m-%d"))
+str(prices.xts)
+head(prices.xts)
+ret<-diff(prices.xts[,c("price.cad","price.usd")])
+ret<-na.omit(ret)
+
+summary(lm(price.usd~price.cad,data=ret))
+
+```
+
+
+
+
+
