@@ -80,7 +80,7 @@ require(purrr)
 tmp<-tmp %>% map_if(is.factor,as.character)
 
 ```
-- More complicate problem
+- More complicated problem
 ```{r, echo=TRUE,message=FALSE}
 prices %>%
   split(.$year) %>%
@@ -112,9 +112,8 @@ str(prices.xts)
 head(prices.xts)
 ret<-diff(prices.xts[,c("price.cad","price.usd")])
 ret<-na.omit(ret)
-
 summary(lm(price.usd~price.cad,data=ret))
-
+save(prices.xts,file="/home/data/session2.RData")
 ```
 
 

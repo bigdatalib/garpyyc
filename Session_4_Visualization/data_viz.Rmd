@@ -9,7 +9,9 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Objectives and Learning
 
-- 
+- Difference between Exploratory vs. Explanatory Analysis
+- Vector Graphic (Java Script) vs. PNG (ggplot) type of graphics
+
 
 ## Tools and Packages
 
@@ -20,10 +22,133 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Using ggplot2 for exploratory analysis
 
+- ggplot (grammer of graphics) 
+- (1) Works well with dplyr and tidyr
+- (2) Large Selection of Graphics 
+- (3) Sharp and Layered Graphics 
+- (4) Big negative is that graphic is not interactive (there are ways around this!)
 
 ## Visulaizing statistical inference
 
+- Basic ggplot graph
+```{r, echo=TRUE,message=FALSE}
+load("/home/data/session1.RData")
+load("/home/data/session2.RData")
+# install.packages("ggplot2")
+require(ggplot2)
+require(dplyr)
+prices %>% ggplot(aes(x=as.Date(date,format="%Y-%m-%d"),y=price.usd)) + geom_point(stat="identity",position="identity") 
+
+
+```
+
+- Little more visual analysis
+```{r, echo=TRUE, message=FALSE}
+require(dplyr)
+prices %>% ggplot(aes(x=as.Date(date,format="%Y-%m-%d"),y=price.usd)) + geom_point(aes(group=factor(year),colour=factor(year))) + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ylab("price") + xlab("date")+ geom_smooth(aes(group=factor(year)),method = "lm")
+ 
+```
+
+- Different type of Plots
+
+```{r, echo=TRUE, message=FALSE}
+require(dplyr)
+prices %>% ggplot(aes(x=year,y=price.cad)) + geom_boxplot(aes(group=year),outlier.colour = "red") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ylab("price") + xlab("date")
+ 
+```
+
+- Finding the relationship between CAD/USD Prices to BTC
+
+```{r, echo=TRUE, message=FALSE}
+require(dplyr)
+prices %>% ggplot(aes(x=price.cad,y=price.usd)) + geom_point(aes(group=factor(year),colour=factor(year)))+ theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ylab("USD") + xlab("CAD") + geom_smooth(aes(group=factor(year)),method = "lm")
+ 
+```
+
+- Extending ggplot2 
+[Source]("http://www.r-bloggers.com/ggplot2-cheatsheet-for-visualizing-distributions/")
+
+```{r, echo=TRUE, message=FALSE}
+require("gridExtra")
+empty <- ggplot()+geom_point(aes(1,1), colour="white") +
+     theme(                              
+       plot.background = element_blank(), 
+       panel.grid.major = element_blank(), 
+       panel.grid.minor = element_blank(), 
+       panel.border = element_blank(), 
+       panel.background = element_blank(),
+       axis.title.x = element_blank(),
+       axis.title.y = element_blank(),
+       axis.text.x = element_blank(),
+       axis.text.y = element_blank(),
+       axis.ticks = element_blank()
+     )
+
+
+
+scatter <- prices %>% ggplot(aes(price.cad, price.usd)) + 
+  geom_point(aes(color=factor(year))) + 
+  scale_color_manual(values = c("orange", "purple","green")) + 
+  theme(legend.position=c(1,1),legend.justification=c(1,1)) 
+
+#marginal density of x - plot on top
+plot_top <- prices %>% ggplot(aes(price.cad, fill=factor(year))) + 
+  geom_density(alpha=.5) + 
+  scale_fill_manual(values = c("orange", "purple","green")) + 
+  theme(legend.position = "none")
+
+#marginal density of y - plot on the right
+plot_right <- prices %>% ggplot(aes(price.usd, fill=factor(year))) + 
+  geom_density(alpha=.5) + 
+  coord_flip() + 
+  scale_fill_manual(values = c("orange", "purple","green")) + 
+  theme(legend.position = "none") 
+
+#arrange the plots together, with appropriate height and width for each row and column
+grid.arrange(plot_top, empty, scatter, plot_right, ncol=2, nrow=2, widths=c(4, 1), heights=c(1, 4))
+
+```
 
 ## Interactive Graphics using Java Script based plots
+
+- Collection of Java Script Based Graphics including D3
+- Good Source from [HTML Widgets]("http://www.htmlwidgets.org/showcase_leaflet.html")
+- Simple Time Series Analysis Using Dygraphs
+- More Information on the package: [Link]("http://rstudio.github.io/dygraphs/")
+
+```{r, echo=FALSE,message=TRUE}
+library(dygraphs)
+dygraph(prices.xts[,c("date","price.cad","price.usd")], main = "USD/BTC and CAD/BTC") %>%
+  dySeries("price.cad", label = "CAD/BTC") %>%
+  dySeries("price.usd", label = "USD/BTC") %>%
+  dyRangeSelector(dateWindow = c("2015-01-01", "2016-05-01"))
+
+```
+
+- Layering Analytics using TTR Package 
+
+```{r, echo=FALSE,message=TRUE}
+library(dygraphs)
+library(TTR)
+tmp.value<-prices.xts[,c("price.usd","price.usd.ret")]
+tmp.value<-na.omit(tmp.value)
+tmp.value$max<-runSD(tmp.value$price.usd.ret,n=20)*1.6+SMA(tmp.value$price.usd,n=50)
+tmp.value$min<--runSD(tmp.value$price.usd.ret,n=20)*1.6+SMA(tmp.value$price.usd,n=50)
+
+dygraph(tmp.value[,c("price.usd","max","min")], main = "USD/BTC Price and Vol") %>%
+  dySeries(c("min","price.usd","max"), label = "USD/BTC") %>%
+  dyOptions(colors = RColorBrewer::brewer.pal(3, "Set1"))
+
+```
+
+- ggplot interactive plots using plotly package
+
+```{r, echo=FALSE,message=TRUE}
+library(plotly)
+p<-prices %>% ggplot(aes(x=price.cad,y=price.usd)) + geom_point(aes(group=factor(year),colour=factor(year)))+ theme(axis.text.x = element_text(angle = 90, hjust = 1)) + ylab("USD") + xlab("CAD") + geom_smooth(aes(group=factor(year)),method = "lm")
+ggplotly(p)
+
+```
+
 
 

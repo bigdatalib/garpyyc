@@ -25,6 +25,9 @@ knitr::opts_chunk$set(echo = FALSE)
 ## Simple descriptive statistics
 
 
+
+
+
 ## Regresssion and Statistical Inference
 
 
@@ -32,3 +35,54 @@ knitr::opts_chunk$set(echo = FALSE)
 
 
 ## Machine Learning
+
+```{r}
+load("/home/data/session2.RData")
+l.1<-lag(prices.xts$price.usd.ret,n=1);names(l.1)<-"L1";prices.xts<-merge(prices.xts,l.1)
+l.2<-lag(prices.xts$price.usd.ret,n=2);names(l.2)<-"L2";prices.xts<-merge(prices.xts,l.2)
+l.3<-lag(prices.xts$price.usd.ret,n=3);names(l.3)<-"L3";prices.xts<-merge(prices.xts,l.3)
+l.5<-lag(prices.xts$price.usd.ret,n=5);names(l.5)<-"L5";prices.xts<-merge(prices.xts,l.5)
+l.10<-lag(prices.xts$price.usd.ret,n=10);names(l.10)<-"L10";prices.xts<-merge(prices.xts,l.10)
+tmp.stg<-data.frame(prices.xts,row.names=NULL)
+```
+
+```{r}
+require(caret)
+tmp.stg<-na.omit(tmp.stg)
+featurePlot(x=tmp.stg[,-7],y=tmp.stg$price.usd.ret,type=c("g","p","smooth"))
+forTraining<-createDataPartition(y=tmp.stg$price.usd.ret,p=3/4)[[1]]
+trainingSet<-tmp.stg[forTraining,]
+testSet<-tmp.stg[-forTraining,]
+set.seed(975)
+
+modFormula<-paste("price.usd.ret ~ L1+L2+L3+L5+L10")
+modFormula<-as.formula(modFormula)
+controlObject<-trainControl(
+                      method="repeatedcv",
+                      repeats=5,
+                      number=10)
+
+linearModel<-train(modFormula,data=trainingSet,method="lm",trControl=controlObject)
+
+svmModel<-train(modFormula,data=trainingSet,
+                 method="svmRadial",
+                 preProc=c("center","scale"),
+                 trControl=controlObject)
+
+
+nnetGrid<-expand.grid(.decay=c(0.001,0.01,0.1),.size=seq(1,27,by=2),.bag=FALSE)
+nnetModel<-train(modFormula,data=trainingSet,
+                 method="avNNet",
+                 tuneGrid=nnetGrid,
+                 preProc=c("center","scale"),
+                 trControl=controlObject,
+                 linout=TRUE,
+                 trace=FALSE,
+                 maxit=1000
+                 )
+
+
+```
+
+
+
