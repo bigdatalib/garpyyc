@@ -16,28 +16,87 @@ knitr::opts_chunk$set(echo = FALSE)
 ## Tools and Packages
 
 - stats package
-- ggplot2
-- glm package
 - time series
+- twitteroutlierdetection
 - caret package
 
 
 ## Simple descriptive statistics
 
-
-
-
+```{r, echo=FALSE, message=FALSE}
+load("/home/data/session2.RData")
+summary(prices.xts)
+head(zoo::rollmean(prices.xts,10))
+```
 
 ## Regresssion and Statistical Inference
 
+```{r, echo=FALSE, message=FALSE}
+load("/home/data/session2.RData")
+summary(prices.xts)
+head(zoo::rollmean(prices.xts,10))
+```
 
 ## Time Series Forcasting
+
+- Univariant Time Series
+
+```{r, echo=FALSE, message=FALSE}
+#install.packages("forecast")
+require(forecast)
+load("/home/data/session1.RData")
+fit <- arima(prices$price.usd, order=c(1, 1, 0))
+fit <- auto.arima(prices$price.usd)
+library(forecast)
+forecast(fit, 5)
+plot(forecast(fit, 30))
+```
+
+- Seasonal Forecat
+
+
+```{r, echo=FALSE, message=FALSE}
+fit <- HoltWinters(prices$price.usd, beta=FALSE, gamma=FALSE)
+# double exponential - models level and trend
+fit <- HoltWinters(prices$price.usd, gamma=FALSE)
+# triple exponential - models level, trend, and seasonal components
+#fit <- HoltWinters(prices$price.usd)
+# predict next three future values
+library(forecast)
+out<-data.frame(forecast(fit, 30),date=index(forecast(fit, 30)))
+plot(forecast(fit, 30))
+
+```
+
+
+## Outlier Detection 
+
+```{r, echo=TRUE,message=FALSE}
+#install.packages("devtools")
+#devtools::install_github("twitter/AnomalyDetection")
+#install.packages("devtools")
+#devtools::install_github("twitter/BreakoutDetection")
+library(BreakoutDetection)
+library(AnomalyDetection)
+value<-prices[,c("date","price.usd")]
+value$date<-as.POSIXlt(value$date,format="%Y-%m-%d")
+res = AnomalyDetectionTs(value,max_anoms=0.1,direction='both',plot=TRUE)
+res$plot
+
+names(value)<-c("timestamp","count")
+res = breakout(value, min.size=24, method='multi', beta=.001, degree=1, plot=TRUE)
+res$plot
+
+```
+
+
+
 
 
 ## Machine Learning
 
-```{r}
-load("/home/data/session2.RData")
+```{r, echo=TRUE, message=FALSE}
+
 l.1<-lag(prices.xts$price.usd.ret,n=1);names(l.1)<-"L1";prices.xts<-merge(prices.xts,l.1)
 l.2<-lag(prices.xts$price.usd.ret,n=2);names(l.2)<-"L2";prices.xts<-merge(prices.xts,l.2)
 l.3<-lag(prices.xts$price.usd.ret,n=3);names(l.3)<-"L3";prices.xts<-merge(prices.xts,l.3)
@@ -46,7 +105,7 @@ l.10<-lag(prices.xts$price.usd.ret,n=10);names(l.10)<-"L10";prices.xts<-merge(pr
 tmp.stg<-data.frame(prices.xts,row.names=NULL)
 ```
 
-```{r}
+```{r, echo=TRUE, message==FALSE, eval=FALSE}
 require(caret)
 tmp.stg<-na.omit(tmp.stg)
 featurePlot(x=tmp.stg[,-7],y=tmp.stg$price.usd.ret,type=c("g","p","smooth"))
@@ -62,7 +121,7 @@ controlObject<-trainControl(
                       repeats=5,
                       number=10)
 
-linearModel<-train(modFormula,data=trainingSet,method="lm",trControl=controlObject)
+lmModel<-train(modFormula,data=trainingSet,method="lm",trControl=controlObject)
 
 svmModel<-train(modFormula,data=trainingSet,
                  method="svmRadial",
@@ -71,16 +130,24 @@ svmModel<-train(modFormula,data=trainingSet,
 
 
 nnetGrid<-expand.grid(.decay=c(0.001,0.01,0.1),.size=seq(1,27,by=2),.bag=FALSE)
-nnetModel<-train(modFormula,data=trainingSet,
-                 method="avNNet",
-                 tuneGrid=nnetGrid,
-                 preProc=c("center","scale"),
-                 trControl=controlObject,
-                 linout=TRUE,
-                 trace=FALSE,
-                 maxit=1000
-                 )
+#nnetModel<-train(modFormula,data=trainingSet,
+#                 method="avNNet",
+#                 tuneGrid=nnetGrid,
+#                 preProc=c("center","scale"),
+#                 trControl=controlObject,
+#                 linout=TRUE,
+#                 trace=FALSE,
+#                 maxit=1000
+#                 )
 
+rpartModel<-train(modFormula,data=trainingSet,
+                 method="rpart",
+                 tuneLength=30,
+                 trControl=controlObject)
+
+allResamples<-resamples(list("Linear"=lmModel,"SVM"=svmModel,"CART"=rpartModel))
+
+caret::parallelplot.resamples(allResamples,metric = "Rsquared")
 
 ```
 
