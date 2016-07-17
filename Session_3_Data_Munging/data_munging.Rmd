@@ -22,6 +22,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Using dplyr to clean data  
 
+- Loading environment
+
 ```{r, echo=TRUE,message=FALSE}
 load("/home/data/session1.RData")
 ```
@@ -116,7 +118,10 @@ summary(lm(price.usd~price.cad,data=ret))
 save(prices.xts,file="/home/data/session2.RData")
 ```
 
+## Further Learning and Links
 
+- Wrangle Chapter - Hadley Wickham [R for Data Science](http://r4ds.had.co.nz/)
+- Courses 1-2 - Johns Hopkins Data Science Specialization [Coursera](https://www.coursera.org/specializations/jhu-data-science)
 
 
 

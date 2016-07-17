@@ -1,5 +1,5 @@
 ---
-title: "Session 3 Statistical Learning"
+title: "Session 5 Statistical Learning"
 output: slidy_presentation
 ---
 
@@ -9,9 +9,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Objectives and Learning
 
-- Descriptive Statistics
-- Inference and Hypothesis Testing 
-- MachineLearning
+- Tools Descriptive Statistics
+- Inference and Hypothesis Testing
 
 ## Tools and Packages
 
@@ -89,10 +88,6 @@ res$plot
 
 ```
 
-
-
-
-
 ## Machine Learning
 
 ```{r, echo=TRUE, message=FALSE}
@@ -150,6 +145,14 @@ allResamples<-resamples(list("Linear"=lmModel,"SVM"=svmModel,"CART"=rpartModel))
 caret::parallelplot.resamples(allResamples,metric = "Rsquared")
 
 ```
+
+## Further Learning and Links
+
+- Max Kuhn [Applied Predictive Modelling](http://appliedpredictivemodeling.com/)
+- [Caret Package](http://topepo.github.io/caret/index.html)
+- Courses on Statistical Inference and Practical Machine Learning - Johns Hopkins Data Science Specialization [Coursera](https://www.coursera.org/specializations/jhu-data-science)
+
+
 
 
 

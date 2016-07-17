@@ -9,11 +9,11 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Objectives and Learning
 
-- Source Raw Data from Web
-- Stage Data for Easy Use
-- Saving Data for Future use
+- Sources of Raw Data from Web
+- Stage Data for Easy Use: tidy format
+- Saving Data for future use different strategies
 
-## Tools and Packages
+## Packages in this Session
 
 - dplyr
 - rjson
@@ -59,8 +59,10 @@ x<-list(v3=x.df,v4=c(1,2,3))
 str(x)
 ```
 
-
 ## Using Web APIs 
+
+- API use REST Technology to allow web calls to either push or pull data
+- Easy to use and efficient way of pulling data from the web
 
 - JSON Format
 ```{r,echo=TRUE,message=FALSE}
@@ -70,7 +72,9 @@ samplefile<-fromJSON("https://www.quandl.com/api/v3/datasets/GDAX/CAD.json")
 str(samplefile)
 value<-samplefile$data$data
 ```
-- Using Quandl Package
+
+
+- Quandl Package example of web API. [Quandl](www.quandl.com) has lots of financial times series data. 
 
 ```{r,echo=TRUE,message=FALSE}
 #install.packages("Quandl")
@@ -83,6 +87,7 @@ head(cad)
 
 ## Very Brief Introduction to dplyr Package
 
+- 80% of any data science project is cleaning data 
 - Best tool for Data Munging for data.frame 
 - documentation and references: [Introduction to dplyr](https://github.com/hadley/dplyr) 
 - dplyr cheat sheet [Link](chrome-extension://oemmndcbldboiebfnladdacbdfmadadm/https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
@@ -141,7 +146,11 @@ load("/home/data/session1.RData")
 head(prices)
 ```
 
+## Further Learning and links
 
+- [Hadoop Project](http://hadoop.apache.org/)
+- [spark](http://spark.apache.org/docs/1.6.2/sparkr.html)
+- [mongodb](https://www.mongodb.com/)
 
 
 

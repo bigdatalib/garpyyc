@@ -66,7 +66,7 @@ prices %>% ggplot(aes(x=price.cad,y=price.usd)) + geom_point(aes(group=factor(ye
 ```
 
 - Extending ggplot2 
-[Source]("http://www.r-bloggers.com/ggplot2-cheatsheet-for-visualizing-distributions/")
+[Source](http://www.r-bloggers.com/ggplot2-cheatsheet-for-visualizing-distributions/)
 
 ```{r, echo=TRUE, message=FALSE}
 require("gridExtra")
@@ -112,9 +112,9 @@ grid.arrange(plot_top, empty, scatter, plot_right, ncol=2, nrow=2, widths=c(4, 1
 ## Interactive Graphics using Java Script based plots
 
 - Collection of Java Script Based Graphics including D3
-- Good Source from [HTML Widgets]("http://www.htmlwidgets.org/showcase_leaflet.html")
+- Good Source from [HTML Widgets](http://www.htmlwidgets.org/showcase_leaflet.html)
 - Simple Time Series Analysis Using Dygraphs
-- More Information on the package: [Link]("http://rstudio.github.io/dygraphs/")
+- More Information on the package: [Link](http://rstudio.github.io/dygraphs/)
 
 ```{r, echo=FALSE,message=TRUE}
 library(dygraphs)
@@ -149,6 +149,14 @@ p<-prices %>% ggplot(aes(x=price.cad,y=price.usd)) + geom_point(aes(group=factor
 ggplotly(p)
 
 ```
+
+## Further Learning and Links
+
+
+- Hadley Wickham [ggplot2](http://ggplot2.org/book/)
+- [HTML Widgets Project](http://www.htmlwidgets.org/)
+
+
 
 
 
