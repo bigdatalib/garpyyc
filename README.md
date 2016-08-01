@@ -7,9 +7,9 @@ Each directory contains two files:
 
 In order to follow the sessions you need:
 
-(1) RStudio IDE Installed (either locally or the cloud node) - https://www.rstudio.com/home/
-(2) Mongodb - https://www.mongodb.com/
-(3) Shiny Server - http://shiny.rstudio.com/
+* (1) RStudio IDE Installed (either locally or the cloud node) - https://www.rstudio.com/home/
+* (2) Mongodb - https://www.mongodb.com/
+* (3) Shiny Server - http://shiny.rstudio.com/
 
 
 
