@@ -1,4 +1,4 @@
-# garpyyc
+# GARPyyc
 **Files for GARP's Data Science for Trading and Risk Management Virtual Sessions**
 
 ## Each directory contains two files: 
