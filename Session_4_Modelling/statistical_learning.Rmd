@@ -1,5 +1,5 @@
 ---
-title: "Session 5 Statistical Learning"
+title: "Session 4 Model Building and Statistical Learning"
 output: slidy_presentation
 ---
 
@@ -51,7 +51,7 @@ forecast(fit, 5)
 plot(forecast(fit, 30))
 ```
 
-- Seasonal Forecat
+- Seasonal Forecast
 
 
 ```{r, echo=FALSE, message=FALSE}
@@ -142,9 +142,16 @@ rpartModel<-train(modFormula,data=trainingSet,
 
 allResamples<-resamples(list("Linear"=lmModel,"SVM"=svmModel,"CART"=rpartModel))
 
+# You can use predict function to predict depending on the model. Simply use the model with the new information.
+predict(lmModel,testSet)
+
+
 caret::parallelplot.resamples(allResamples,metric = "Rsquared")
 
 ```
+
+
+
 
 ## Further Learning and Links
 

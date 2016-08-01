@@ -22,7 +22,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Using ggplot2 for exploratory analysis
 
-- ggplot (grammer of graphics) 
+- ggplot (grammar of graphics) 
 - (1) Works well with dplyr and tidyr
 - (2) Large Selection of Graphics 
 - (3) Sharp and Layered Graphics 
@@ -155,7 +155,7 @@ ggplotly(p)
 
 - Hadley Wickham [ggplot2](http://ggplot2.org/book/)
 - [HTML Widgets Project](http://www.htmlwidgets.org/)
-
+- [D3JS](https://d3js.org/)
 
 
 

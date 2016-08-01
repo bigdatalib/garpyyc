@@ -1,5 +1,5 @@
 ---
-title: "Session 6 Example"
+title: "Session 5 Web apps"
 runtime: shiny
 output: html_document
 ---
@@ -17,7 +17,7 @@ require("gridExtra")
 
 ## Objectives and Learning
 
-- Reproducable Analysis R Markdown
+- Reproducible Analysis R Markdown
 - Shiny Package and Interactive Apps
 - Deploying Web Apps in the Cloud
 
@@ -37,9 +37,9 @@ require("gridExtra")
 
 - Powerful Web Application without knowing HTML and Java Script
 - Concept of UI and Server Files
-- Bootstrap UI interface and scaffholding
+- Bootstrap UI interface and scaffolding
 - Concept of Reactivity 
-- UI Inveractive vs. Server Interactive 
+- UI Interactive vs. Server Interactive 
 
 ## Developing a Simple App
 
@@ -68,7 +68,7 @@ dygraph(prices.xts[,c(input$value)], main = "example") %>%
 
 
 
-```{r eruptions, echo=T}
+```{r eruptions, echo=F}
 
 input.choices<-c("price.cad","vol.cad","price.usd","vol.usd","price.usd.ret","price.cad.ret") 
   
@@ -130,6 +130,11 @@ grid.arrange(plot_top, empty, scatter, plot_right, ncol=2, nrow=2, widths=c(4, 1
 - shiny server/shiny server pro
 
 
-## Further Learning
+## Further Learning and Links
+
+- [RStudio/Shiny](http://shiny.rstudio.com/)
+- [Bootstrap](http://getbootstrap.com/)
+
+
 
 

@@ -1,5 +1,5 @@
 ---
-title: "Session 2 Data Ingesting and Stageing"
+title: "Session 1 -  Data Ingesting and Stageing"
 output: slidy_presentation
 ---
 
@@ -38,6 +38,7 @@ install.packages("xts")
 - numeric
 ```{r,echo=TRUE,message=FALSE}
 x<-5
+x=5
 str(x)
 ```
 - character
@@ -92,7 +93,7 @@ head(cad)
 - documentation and references: [Introduction to dplyr](https://github.com/hadley/dplyr) 
 - dplyr cheat sheet [Link](chrome-extension://oemmndcbldboiebfnladdacbdfmadadm/https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
-- example: Merge USD/BTC and CAD/BTC data by date sets calcuate day over day change for price and volume
+- example: Merge USD/BTC and CAD/BTC data by date sets calculate day over day change for price and volume
 
 ```{r, echo=TRUE,message=FALSE}
 # install.packages("dplyr")
@@ -114,7 +115,7 @@ head(prices)
 
 - Many choice among SQL and NoSQL Application
 - Database as a datasource
-- Persistance of Analytics Data
+- Persistence of Analytics Data
 R Packages: DBI, RMySQL, rmongodb, or mongolite
 
 ```{r, echo=TRUE, message=TRUE}

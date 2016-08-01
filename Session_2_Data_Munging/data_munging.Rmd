@@ -1,5 +1,5 @@
 ---
-title: "Session 3 Data Munging and Cleaning"
+title: "Session 2 Data Munging and Cleaning"
 output: slidy_presentation
 ---
 
@@ -80,7 +80,7 @@ str(tmp)
 # install.packages("purrr")
 require(purrr)
 tmp<-tmp %>% map_if(is.factor,as.character)
-
+str(tmp)
 ```
 - More complicated problem
 ```{r, echo=TRUE,message=FALSE}
@@ -96,6 +96,8 @@ prices %>%
   map(summary) %>%
   map_dbl("r.squared")
 ```
+
+Further reading: [purrr package github](https://github.com/hadley/purrr)
 
 ## Using xts vs. dataframe Pros/Cons
 
@@ -122,6 +124,15 @@ save(prices.xts,file="/home/data/session2.RData")
 
 - Wrangle Chapter - Hadley Wickham [R for Data Science](http://r4ds.had.co.nz/)
 - Courses 1-2 - Johns Hopkins Data Science Specialization [Coursera](https://www.coursera.org/specializations/jhu-data-science)
+
+## Other Useful Packages:
+
+- quantmod: Time series financial data analysis  
+- TTR: Technical Trading and Quant Signals
+- quantstrat: Full functional blotter and Quant Trading Systems
+- PerformanceAnalytics: Risk Management and Financial Performance Package
+
+
 
 
 
