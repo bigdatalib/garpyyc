@@ -1,6 +1,7 @@
 # garpyyc
 **Files for GARP's Data Science for Trading and Risk Management Virtual Sessions**
-Each directory contains two files: 
+
+## Each directory contains two files: 
 
 (1) RMarkdown Slides 
 (2) HTML Rendered Slides (you can view these in your browser)
